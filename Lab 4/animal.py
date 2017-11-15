@@ -1,3 +1,4 @@
+import random
 class Animal(object):
 	def __init__(self,sound,name,age,favorite_color):
 	 	self.sound=sound
@@ -31,15 +32,28 @@ h= Person("Harry", 16, "Jerusalem", "male")
 h.eat_breakfast("waffles")
 h.city_living("4")
 
+
 class Song(object):
 	def __init__(self,lyrics):
 		self.lyrics=lyrics
-	def seas(self):
-		n=0
-		for i in range(3):
-			print(self[n])
-			n=n+1
+	def random_lyrics(self,lyrics):
+		num=[]
+		for i  in lyrics:
+			
+			n=random.randint(0,2)
+			if n not in num:
+				print(lyrics[n])
+			num.append(n)
+
+
+
+	def sing (self):
+		print(self.lyrics)
+
 flower_song = Song(["Roses are red,",
 			"voilets are blue,",
 			"I wrote a poem for you"])
-flower_song.seas()
+flower_song.random_lyrics(["Roses are red,",
+			"voilets are blue,",
+			"I wrote a poem for you"])
+
