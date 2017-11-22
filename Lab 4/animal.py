@@ -39,7 +39,6 @@ class Song(object):
 	def random_lyrics(self,lyrics):
 		num=[]
 		for i  in lyrics:
-			
 			n=random.randint(0,2)
 			if n not in num:
 				print(lyrics[n])
