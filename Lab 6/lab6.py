@@ -30,4 +30,4 @@ def check_collision(ball1, ball2):
 
 
 check_collision(ball2, ball1)
-mainloop()
+mainloop()	
