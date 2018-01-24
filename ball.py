@@ -11,6 +11,8 @@ class Ball(Turtle):
 		self.shape("circle")
 		self.shapesize(r/10)
 		self.color(color)
+
+
 	def move(self, screen_width, screen_height):
 		current_x=self.xcor()
 		new_x= current_x+self.dx
@@ -21,13 +23,17 @@ class Ball(Turtle):
 		top_side_ball=new_y+self.r
 		bottom_side_ball=new_y-self.r
 		self.goto(new_x,new_y)
-		if left_side_ball==(screen_width/-2):
-			ball.goto(new_x+self.dx, new_y)
-		if right_side_ball==(screen_width/2):
-			ball.goto(new_x-self.dx, new_y)
-		if top_side_ball==(screen_height/2):
-			ball.goto(new_x, new_y-self.dy)
-		if bottom_side_ball==(screen_height/-2):
-			ball.goto(new_x, new_y+self.dy)
+		
+		if left_side_ball<=(screen_width/-1):
+			self.dx=-self.dx
+		
+		if right_side_ball>=(screen_width):
+			self.dx=-self.dx
+		
+		if top_side_ball>=(screen_height):
+			self.dy=-self.dy
+		
+		if bottom_side_ball<=(screen_height/-1):
+			self.dy=-self.dy
 
 
