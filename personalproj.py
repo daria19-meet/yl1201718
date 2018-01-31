@@ -1,12 +1,24 @@
 from turtle import *
+import turtle
 import time
 import random 
 from ball import Ball
 import math
 
+
+turtle.hideturtle()
 hideturtle()
 tracer(0)
 colormode(255)
+turtle.goto(-100,100)
+turtle.write("START GAME", move=False, align="left", font=("Arial", 20, "normal"))
+turtle.goto(-150,0)
+turtle.write("Eat the other balls to get bigger!", font=("Arial", 16, "normal"))
+turtle.goto(-150,-50)
+turtle.write("Don't let bigger balls eat you!", font=("Arial", 16, "normal"))
+time.sleep(2)
+turtle.clear()
+
 
 RUNNING=True
 SLEEP=0.0077
@@ -21,10 +33,13 @@ MINIMUM_BALL_DY=-1
 MAXIMUM_BALL_DY=1
 BALLS=[]
 MY_BALL=Ball(0,0,0,0,30,"red")
+MY_BALL_C=[]
+
 
 
 def generate_stats():
 	x=random.randint(int(-SCREEN_WIDTH+MAXIMUM_BALL_RADIUS),int(SCREEN_WIDTH-MAXIMUM_BALL_RADIUS))
+
 	y=random.randint(int(-SCREEN_HEIGHT + MAXIMUM_BALL_RADIUS),int(SCREEN_HEIGHT - MAXIMUM_BALL_RADIUS))
 	dx=random.randint(MINIMUM_BALL_DX,MAXIMUM_BALL_DX)
 	
@@ -35,6 +50,11 @@ def generate_stats():
 	while dy==0:
 		dy=random.randint(MINIMUM_BALL_DY,MAXIMUM_BALL_DY)
 	r=random.randint(MINIMUM_BALL_RADIUS,MAXIMUM_BALL_RADIUS)
+
+	while x>0 and x<=0+r:
+		x=random.randint(int(-SCREEN_WIDTH+MAXIMUM_BALL_RADIUS),int(SCREEN_WIDTH-MAXIMUM_BALL_RADIUS))
+		r=random.randint(MINIMUM_BALL_RADIUS,MAXIMUM_BALL_RADIUS)
+
 	color=(random.randint(0,255),random.randint(0,255),random.randint(0,255))
 	return (x,y,dx,dy,r,color)
 	
@@ -100,13 +120,15 @@ def check_myball_collision():
 				i.r=r
 				new_r2=MY_BALL.r+1
 				MY_BALL.r=new_r2
-				MY_BALL.shapesize(new_r2/10)
+		
+				MY_BALL.shapesize(MY_BALL.r/10)
 	return True 
 
 def movearound(event):
 	x_cord=event.x-SCREEN_WIDTH
-	y_cord=event.y-SCREEN_HEIGHT
+	y_cord=SCREEN_HEIGHT-event.y
 	MY_BALL.goto(x_cord,y_cord)
+
 
 
 getcanvas().bind("<Motion>", movearound)
