@@ -16,8 +16,13 @@ turtle.goto(-150,0)
 turtle.write("Eat the other balls to get bigger!", font=("Arial", 16, "normal"))
 turtle.goto(-150,-50)
 turtle.write("Don't let bigger balls eat you!", font=("Arial", 16, "normal"))
+turtle_clone=turtle.clone()
+turtle_clone.hideturtle()
+turtle_clone.penup()
+turtle_clone.goto(-100,100)
 time.sleep(2)
 turtle.clear()
+
 
 
 RUNNING=True
@@ -26,7 +31,7 @@ SCREEN_WIDTH= getcanvas().winfo_width()/2
 SCREEN_HEIGHT= getcanvas().winfo_height()/2
 NUMBER_OF_BALLS=5
 MINIMUM_BALL_RADIUS=10
-MAXIMUM_BALL_RADIUS=75
+MAXIMUM_BALL_RADIUS=60
 MINIMUM_BALL_DX=-1
 MAXIMUM_BALL_DX=1
 MINIMUM_BALL_DY=-1
@@ -68,6 +73,7 @@ def move_all_balls():
 		i.move(SCREEN_WIDTH,SCREEN_HEIGHT)
 
 
+
 def collide(ball_a,ball_b):
 	 if ball_a==ball_b:
 	 	return False 
@@ -98,6 +104,16 @@ def check_all_balls():
 				ball_loser.dy=dy
 				ball_loser.shapesize(r/10)
 				ball_loser.r=r
+				collide(MY_BALL,ball_loser)
+				if collide(MY_BALL,ball_loser):
+					if MY_BALL.r < ball_loser.r:
+						return False 
+					else:
+						ball_lr=ball_loser.r
+						(x,y,dx,dy)=generate_stats()
+						ball_loser.goto(x,y)
+						ball_loser.dx=dx
+						ball_loser.dy=dy
 				new_r=ball_winner.r+1
 				ball_winner.r=new_r
 				ball_winner.shapesize(new_r/10)
@@ -108,7 +124,8 @@ def check_myball_collision():
 		collide(MY_BALL,i)
 		if collide(MY_BALL,i):
 			if MY_BALL.r < i.r:
-				return False 
+				turtle_clone.write("YOU LOSE!",align= "left", font=("Arial",30, "normal")) 
+				return False
 			else:
 				ball_ir=i.r
 				MY_BALLr=MY_BALL.r
